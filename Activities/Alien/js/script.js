@@ -1,8 +1,8 @@
 /***********************************************
-Template p5 project
+Drwing an Alien
 MGL
 
-This is a description of this template project.
+Draws an alien on the canvas
 ************************************************/
 
 "use strict";
@@ -17,7 +17,7 @@ function preload() {
 
 
 /**
-Description of setup
+Draws an Alien
 */
 function setup() {
 
