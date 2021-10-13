@@ -2,7 +2,7 @@
 Drwing an Alien
 MGL
 
-Draws an alien on the canvas
+Draws an alien on the createCanvas
 ************************************************/
 
 "use strict";
