@@ -58,7 +58,7 @@ let circle4 = {
 // function preload() {
 //     zapImage = loadImage("assets/images/ZAP.png")
 
-let state = `simulation`;
+let state = `title`;
 
 function preload() {
   titleCardImage = loadImage("assets/images/titlecard.png");
@@ -176,5 +176,11 @@ function checkOverlap4() {
   let d = dist(circle4.x, circle4.y, mouseX, mouseY);
   if (circle4.collected === false && d < circle4.size / 2 + cyborgMonkeyImage.width / 2) {
      circle4.collected = true;
+  }
+}
+
+function mousePressed() {
+  if (state === "title") {
+    state = 'simulation';
   }
 }
