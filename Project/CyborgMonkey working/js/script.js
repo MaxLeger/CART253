@@ -15,7 +15,8 @@ let circle1 = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 3
+  speed: 3,
+  collected: false
 
 };
 
@@ -25,7 +26,8 @@ let circle2 = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 3
+  speed: 3,
+  collected: false
 
 };
 
@@ -35,7 +37,8 @@ let circle3 = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 3
+  speed: 3,
+  collected: false
 
 };
 
@@ -45,7 +48,8 @@ let circle4 = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 3
+  speed: 3,
+  collected: false
 
 };
 
@@ -88,6 +92,10 @@ function draw() {
   }
   else if (state === `simulation`) {
     simulation();
+    checkOverlap1();
+    checkOverlap2();
+    checkOverlap3();
+    checkOverlap4();
   }
 }
 
@@ -111,14 +119,62 @@ function simulation() {
   circle4.x = circle4.x + circle4.vx;
   circle4.y = circle4.y + circle4.vy;
 
-  ellipse(circle1.x, circle1.y, circle1.size)
-  ellipse(circle2.x, circle2.y, circle2.size)
-  ellipse(circle3.x, circle3.y, circle3.size)
-  ellipse(circle4.x, circle4.y, circle4.size)
+  if (circle1.collected === false) {
+
+    ellipse(circle1.x, circle1.y, circle1.size)
+
+  }
+
+  if (circle2.collected === false) {
+
+    ellipse(circle2.x, circle2.y, circle2.size)
+
+  }
+
+  if (circle3.collected === false) {
+
+    ellipse(circle3.x, circle3.y, circle3.size)
+
+  }
+
+  if (circle4.collected === false) {
+
+    ellipse(circle4.x, circle4.y, circle4.size)
+
+  }
 
   // The Ellispse is an Actor for collision
   ellipse(mouseX, mouseY, 81);
 
   imageMode(CENTER)
   image(cyborgMonkeyImage, mouseX, mouseY, 0, 0);
+}
+
+//Check if the circles are overlapping [CONCEPT]
+function checkOverlap1() {
+  let d = dist(circle1.x, circle1.y, mouseX, mouseY);
+  if (circle1.collected === false && d < circle1.size / 2 + cyborgMonkeyImage.width / 2) {
+     circle1.collected = true;
+  }
+}
+
+function checkOverlap2() {
+  let d = dist(circle2.x, circle2.y, mouseX, mouseY);
+  if (circle2.collected === false && d < circle2.size / 2 + cyborgMonkeyImage.width / 2) {
+     circle2.collected = true;
+  }
+}
+
+function checkOverlap3() {
+  let d = dist(circle3.x, circle3.y, mouseX, mouseY);
+  if (circle3.collected === false && d < circle3.size / 2 + cyborgMonkeyImage.width / 2) {
+     circle3.collected = true;
+  }
+}
+
+function checkOverlap4() {
+  let d = dist(circle4.x, circle4.y, mouseX, mouseY);
+  if (circle4.collected === false && d < circle4.size / 2 + cyborgMonkeyImage.width / 2) {
+     circle4.collected = true;
+  }
 }
