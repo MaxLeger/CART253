@@ -66,7 +66,6 @@ function preload() {
   sleepImage = loadImage("assets/images/Sleep.png");
   winImage = loadImage("assets/images/WorkingMonkey.png");
   zapImage = loadImage("assets/images/ZAP.png")
-
 }
 
 function setup() {
@@ -86,7 +85,6 @@ function setup() {
   circle2.vy = random(-4, 0);
   circle3.vy = random(0, 4);
   circle4.vy = random(-4.0);
-
 }
 
 function draw() {
@@ -95,11 +93,13 @@ function draw() {
   }
   else if (state === `simulation`) {
     simulation();
-
   }
+
+  //This state is currently not running
   // else if (state === 'sleep') {
   //   sleep();
   // }
+
   else if (state === 'gathered') {
     win();
   }
@@ -113,14 +113,10 @@ function title() {
   image(titleCardImage, 0, 0);
 }
 
+//This fuction is currently not running
 // function sleep() {
 //   // Display sleep image
 //   //image(sleepImage, 250, 250);
-
-//   textSize(64);
-//   fill(126, 126, 126)
-//   textAlign(CENTER,CENTER);
-//   text('loose!', width/2, height/2)
 
 }
 
@@ -216,6 +212,7 @@ function mousePressed() {
   }
 }
 
+//This fuction is currently not running
 // //Verifies if an energy bolt hasn't been catch by the monkey actor.
 // function checkOffscreen() {
 //   //Check if the circles have gone offscreen
