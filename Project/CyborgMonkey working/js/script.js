@@ -1,13 +1,17 @@
 /***********************************************
-Template p5 project #2
+Project 1: CYBORG MONKEY
 MGL
-This is a description of this template project.
+
+This monkey is running out of battery.
+Quick!
+Help him charge up by collecting energy bolts.
 ************************************************/
 
 // Monkey image
 let cyberMonkeyImage;
 let titleCardImage;
 let sleepImage;
+let winImage;
 
 let circle1 = {
   x: 51,
@@ -64,6 +68,7 @@ function preload() {
   titleCardImage = loadImage("assets/images/titlecard.png");
   cyborgMonkeyImage = loadImage("assets/images/CyborgMonkey.png");
   sleepImage = loadImage("assets/images/Sleep.png");
+  winImage = loadImage("assets/images/WorkingMonkey.png");
 
 }
 
@@ -103,10 +108,7 @@ function draw() {
   }
 
 function win() {
-  textSize(64);
-  fill(126, 126, 126)
-  textAlign(CENTER,CENTER);
-  text('Win!', width/2, height/2)
+  image(winImage, 250, 250);
 }
 
 function title() {
@@ -117,6 +119,7 @@ function title() {
 // function sleep() {
 //   // Display sleep image
 //   //image(sleepImage, 0, 0);
+
 //   textSize(64);
 //   fill(126, 126, 126)
 //   textAlign(CENTER,CENTER);
