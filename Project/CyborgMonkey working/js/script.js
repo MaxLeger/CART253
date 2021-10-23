@@ -7,7 +7,7 @@ This is a description of this template project.
 // Monkey image
 let cyberMonkeyImage;
 let titleCardImage;
-
+let sleepImage;
 
 let circle1 = {
   x: 51,
@@ -15,7 +15,7 @@ let circle1 = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 3,
+  speed: 4.5,
   collected: false
 
 };
@@ -26,7 +26,7 @@ let circle2 = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 3,
+  speed: 4.5,
   collected: false
 
 };
@@ -37,7 +37,7 @@ let circle3 = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 3,
+  speed: 4.5,
   collected: false
 
 };
@@ -48,7 +48,7 @@ let circle4 = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 3,
+  speed: 4.5,
   collected: false
 
 };
@@ -63,7 +63,8 @@ let state = `title`;
 function preload() {
   titleCardImage = loadImage("assets/images/titlecard.png");
   cyborgMonkeyImage = loadImage("assets/images/CyborgMonkey.png");
-  // Load other stuff
+  sleepImage = loadImage("assets/images/Sleep.png");
+
 }
 
 function setup() {
@@ -92,11 +93,20 @@ function draw() {
   }
   else if (state === `simulation`) {
     simulation();
-    checkOverlap1();
-    checkOverlap2();
-    checkOverlap3();
-    checkOverlap4();
+
   }
+  // else if (state === 'sleep') {
+  //   sleep();
+  // }
+  else if (state === 'gathered') {
+    win();
+  }
+
+function win() {
+  textSize(64);
+  fill(126, 126, 126)
+  textAlign(CENTER,CENTER);
+  text('Win!', width/2, height/2)
 }
 
 function title() {
@@ -104,7 +114,28 @@ function title() {
   image(titleCardImage, 0, 0);
 }
 
+// function sleep() {
+//   // Display sleep image
+//   //image(sleepImage, 0, 0);
+//   textSize(64);
+//   fill(126, 126, 126)
+//   textAlign(CENTER,CENTER);
+//   text('loose!', width/2, height/2)
+
+}
+
 function simulation() {
+  display();
+  checkOverlap1();
+  checkOverlap2();
+  checkOverlap3();
+  checkOverlap4();
+  //checkOffscreen();
+  gathered();
+}
+
+
+function display() {
   background(0);
 
   circle1.x = circle1.x + circle1.vx;
@@ -182,5 +213,19 @@ function checkOverlap4() {
 function mousePressed() {
   if (state === "title") {
     state = 'simulation';
+  }
+}
+
+// //Verifies if an energy bolt hasn't been catch by the monkey actor.
+// function checkOffscreen() {
+//   //Check if the circles have gone offscreen
+//   if (circle1.x > 500 || circle1.y > 500) {
+//     state = 'sleep'
+//   }
+// }
+
+function gathered() {
+  if (circle1.collected === true && circle2.collected === true && circle3.collected === true && circle4.collected === true) {
+    state = 'gathered'
   }
 }
