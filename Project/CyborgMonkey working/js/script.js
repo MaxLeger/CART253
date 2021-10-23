@@ -12,6 +12,7 @@ let cyberMonkeyImage;
 let titleCardImage;
 let sleepImage;
 let winImage;
+let zapImage
 
 let circle1 = {
   x: 51,
@@ -57,11 +58,6 @@ let circle4 = {
 
 };
 
-// let zapImage;
-//
-// function preload() {
-//     zapImage = loadImage("assets/images/ZAP.png")
-
 let state = `title`;
 
 function preload() {
@@ -69,6 +65,7 @@ function preload() {
   cyborgMonkeyImage = loadImage("assets/images/CyborgMonkey.png");
   sleepImage = loadImage("assets/images/Sleep.png");
   winImage = loadImage("assets/images/WorkingMonkey.png");
+  zapImage = loadImage("assets/images/ZAP.png")
 
 }
 
@@ -118,7 +115,7 @@ function title() {
 
 // function sleep() {
 //   // Display sleep image
-//   //image(sleepImage, 0, 0);
+//   //image(sleepImage, 250, 250);
 
 //   textSize(64);
 //   fill(126, 126, 126)
@@ -155,25 +152,25 @@ function display() {
 
   if (circle1.collected === false) {
 
-    ellipse(circle1.x, circle1.y, circle1.size)
+    image(zapImage, circle1.x, circle1.y, circle1.size)
 
   }
 
   if (circle2.collected === false) {
 
-    ellipse(circle2.x, circle2.y, circle2.size)
+    image(zapImage, circle2.x, circle2.y, circle2.size)
 
   }
 
   if (circle3.collected === false) {
 
-    ellipse(circle3.x, circle3.y, circle3.size)
+    image(zapImage, circle3.x, circle3.y, circle3.size)
 
   }
 
   if (circle4.collected === false) {
 
-    ellipse(circle4.x, circle4.y, circle4.size)
+    image(zapImage, circle4.x, circle4.y, circle4.size)
 
   }
 
