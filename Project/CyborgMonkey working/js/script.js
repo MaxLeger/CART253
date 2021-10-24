@@ -12,7 +12,9 @@ let cyberMonkeyImage;
 let titleCardImage;
 let sleepImage;
 let winImage;
-let zapImage
+let zapImage;
+let winSFX;
+let chargeSFX;
 
 let circle1 = {
   x: 51,
@@ -65,7 +67,9 @@ function preload() {
   cyborgMonkeyImage = loadImage("assets/images/CyborgMonkey.png");
   sleepImage = loadImage("assets/images/Sleep.png");
   winImage = loadImage("assets/images/WorkingMonkey.png");
-  zapImage = loadImage("assets/images/ZAP.png")
+  zapImage = loadImage("assets/images/ZAP.png");
+  winSFX = loadSound("assets/sounds/win.wav");
+  chargeSFX = loadSound("assets/sounds/Charge.m4a");
 }
 
 function setup() {
@@ -106,11 +110,13 @@ function draw() {
 
 function win() {
   image(winImage, 250, 250);
+  winSFX.play();
 }
 
 function title() {
   // Display the image of the title card
   image(titleCardImage, 0, 0);
+
 }
 
 //This fuction is currently not running
@@ -126,6 +132,10 @@ function simulation() {
   checkOverlap2();
   checkOverlap3();
   checkOverlap4();
+  chargeSound1();
+  chargeSound2();
+  chargeSound3();
+  chargeSound4();
   //checkOffscreen();
   gathered();
 }
@@ -224,5 +234,27 @@ function mousePressed() {
 function gathered() {
   if (circle1.collected === true && circle2.collected === true && circle3.collected === true && circle4.collected === true) {
     state = 'gathered'
+  }
+}
+
+// Sound effects functions
+function chargeSound1() {
+  if (circle1.collected === true) {
+    chargeSFX.play()
+  }
+}
+function chargeSound2() {
+  if (circle2.collected === true) {
+    chargeSFX.play()
+  }
+}
+function chargeSound3() {
+  if (circle3.collected === true) {
+    chargeSFX.play()
+  }
+}
+function chargeSound4() {
+  if (circle4.collected === true) {
+    chargeSFX.play()
   }
 }
