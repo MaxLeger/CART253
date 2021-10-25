@@ -15,6 +15,7 @@ let winImage;
 let zapImage;
 let winSFX;
 let chargeSFX;
+let shockMonkey;
 
 let circle1 = {
   x: 51,
@@ -70,6 +71,7 @@ function preload() {
   zapImage = loadImage("assets/images/ZAP.png");
   winSFX = loadSound("assets/sounds/win.wav");
   chargeSFX = loadSound("assets/sounds/Charge.m4a");
+  shockMonkey = loadSound("assets/sounds/ShockTheMonkey.mp3");
 }
 
 function setup() {
@@ -110,7 +112,7 @@ function draw() {
 
 function win() {
   image(winImage, 250, 250);
-  winSFX.play();
+  // winSFX.play();
 }
 
 function title() {
@@ -132,10 +134,10 @@ function simulation() {
   checkOverlap2();
   checkOverlap3();
   checkOverlap4();
-  chargeSound1();
-  chargeSound2();
-  chargeSound3();
-  chargeSound4();
+  // chargeSound1();
+  // chargeSound2();
+  // chargeSound3();
+  // chargeSound4();
   //checkOffscreen();
   gathered();
 }
@@ -237,24 +239,24 @@ function gathered() {
   }
 }
 
-// Sound effects functions
-function chargeSound1() {
-  if (circle1.collected === true) {
-    chargeSFX.play()
-  }
-}
-function chargeSound2() {
-  if (circle2.collected === true) {
-    chargeSFX.play()
-  }
-}
-function chargeSound3() {
-  if (circle3.collected === true) {
-    chargeSFX.play()
-  }
-}
-function chargeSound4() {
-  if (circle4.collected === true) {
-    chargeSFX.play()
-  }
-}
+// // Sound effects functions
+// function chargeSound1() {
+//   if (circle1.collected === true) {
+//     chargeSFX.play()
+//   }
+// }
+// function chargeSound2() {
+//   if (circle2.collected === true) {
+//     chargeSFX.play()
+//   }
+// }
+// function chargeSound3() {
+//   if (circle3.collected === true) {
+//     chargeSFX.play()
+//   }
+// }
+// function chargeSound4() {
+//   if (circle4.collected === true) {
+//     chargeSFX.play()
+//   }
+// }
