@@ -69,9 +69,13 @@ function preload() {
   sleepImage = loadImage("assets/images/Sleep.png");
   winImage = loadImage("assets/images/WorkingMonkey.png");
   zapImage = loadImage("assets/images/ZAP.png");
+
+// ** The sound functions are playing irregularly **
+
   // winSFX = loadSound("assets/sounds/win.wav");
   // chargeSFX = loadSound("assets/sounds/Charge.m4a");
   // shockMonkey = loadSound("assets/sounds/ShockTheMonkey.mp3");
+
 }
 
 function setup() {
@@ -101,7 +105,7 @@ function draw() {
     simulation();
   }
 
-  //This state is currently not running
+  // ** This state is currently not running **
   // else if (state === 'sleep') {
   //   sleep();
   // }
@@ -112,6 +116,7 @@ function draw() {
 
 function win() {
   image(winImage, 250, 250);
+  // ** canceled sound **
   // winSFX.play();
 }
 
@@ -134,10 +139,14 @@ function simulation() {
   checkOverlap2();
   checkOverlap3();
   checkOverlap4();
+
+  //** canceled sound **
   // chargeSound1();
   // chargeSound2();
   // chargeSound3();
   // chargeSound4();
+
+  //** canceled function **
   //checkOffscreen();
   gathered();
 }
@@ -239,7 +248,7 @@ function gathered() {
   }
 }
 
-// // Sound effects functions
+// // ** Sound effects functions canceled **
 // function chargeSound1() {
 //   if (circle1.collected === true) {
 //     chargeSFX.play()
