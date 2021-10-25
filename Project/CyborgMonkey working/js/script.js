@@ -69,9 +69,9 @@ function preload() {
   sleepImage = loadImage("assets/images/Sleep.png");
   winImage = loadImage("assets/images/WorkingMonkey.png");
   zapImage = loadImage("assets/images/ZAP.png");
-  winSFX = loadSound("assets/sounds/win.wav");
-  chargeSFX = loadSound("assets/sounds/Charge.m4a");
-  shockMonkey = loadSound("assets/sounds/ShockTheMonkey.mp3");
+  // winSFX = loadSound("assets/sounds/win.wav");
+  // chargeSFX = loadSound("assets/sounds/Charge.m4a");
+  // shockMonkey = loadSound("assets/sounds/ShockTheMonkey.mp3");
 }
 
 function setup() {
