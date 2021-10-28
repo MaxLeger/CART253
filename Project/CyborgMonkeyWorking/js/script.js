@@ -13,7 +13,6 @@ let titleCardImage;
 let sleepImage;
 let winImage;
 let zapImage;
-let winSFX;
 let chargeSFX;
 let shockMonkey;
 
@@ -72,11 +71,20 @@ function preload() {
 
   // ** The sound functions are playing irregularly **
 
-  // winSFX = loadSound("assets/sounds/win.wav");
   chargeSFX = loadSound("assets/sounds/Charge.m4a");
-  // shockMonkey = loadSound("assets/sounds/ShockTheMonkey.mp3");
+  shockMonkey = loadSound("assets/sounds/ShockTheMonkey.mp3");
 
 }
+
+//SOUND ON OFF//
+function toggleMusic(){
+  if (state === 'title' || state === 'simulation') {
+  shockMonkey.loop();
+} else {
+  shockMonkey.stop();
+}
+}
+
 
 function setup() {
   createCanvas(500, 500);
@@ -112,11 +120,10 @@ function draw() {
   else if (state === 'gathered') {
     win();
   }
+}
 
   function win() {
     image(winImage, 250, 250);
-    // ** canceled sound **
-    // winSFX.play();
   }
 
   function title() {
@@ -138,15 +145,10 @@ function draw() {
     checkOverlap2();
     checkOverlap3();
     checkOverlap4();
-
-    //** canceled sound **
-    // chargeSound1();
-    // chargeSound2();
-    // chargeSound3();
-    // chargeSound4();
-
-    //** canceled function **
-    checkOffscreen();
+    checkOffscreen1();
+    checkOffscreen2();
+    checkOffscreen3();
+    checkOffscreen4();
     gathered();
   }
 
@@ -197,7 +199,7 @@ function draw() {
     image(cyborgMonkeyImage, mouseX, mouseY, 0, 0);
   }
 
-  //Check if the circles are overlapping [CONCEPT]
+  //Check if the circles are overlapping
   function checkOverlap1() {
     let d = dist(circle1.x, circle1.y, mouseX, mouseY);
     if (circle1.collected === false && d < circle1.size / 2 + cyborgMonkeyImage.width / 2) {
@@ -238,10 +240,31 @@ function draw() {
 
   //This fuction is currently not running
   // //Verifies if an energy bolt hasn't been catch by the monkey actor.
-  function checkOffscreen() {
+  function checkOffscreen1() {
     //Check if the circles have gone offscreen
     if (circle1.x > 500 || circle1.y > 500) {
-      state = 'sleep'
+      state = 'sleep';
+    }
+  }
+
+  function checkOffscreen2() {
+    //Check if the circles have gone offscreen
+    if (circle2.x > 500 || circle2.y < 0) {
+      state = 'sleep';
+    }
+  }
+
+  function checkOffscreen3() {
+    //Check if the circles have gone offscreen
+    if (circle3.x < 0 || circle3.y > 550) {
+      state = 'sleep';
+    }
+  }
+
+  function checkOffscreen4() {
+    //Check if the circles have gone offscreen
+    if (circle4.x < 0 || circle4.y < 0) {
+      state = 'sleep';
     }
   }
 
