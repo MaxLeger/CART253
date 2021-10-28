@@ -72,19 +72,25 @@ function preload() {
   // ** The sound functions are playing irregularly **
 
   chargeSFX = loadSound("assets/sounds/Charge.m4a");
-  shockMonkey = loadSound("assets/sounds/ShockTheMonkey.mp3");
+  shockMonkey = loadSound("assets/sounds/MonkeyAudio.m4a");
 
 }
 
-//SOUND ON OFF//
-function toggleMusic(){
-  if (state === 'title' || state === 'simulation') {
-  shockMonkey.loop();
-} else {
-  shockMonkey.stop();
-}
-}
+// //SOUND ON OFF//
+// function toggleMusic(){
+//   if (state === 'title' || state === 'simulation') {
+//   shockMonkey.loop();
+// }
+// else {
+//   shockMonkey.stop();
+// }
+// }
 
+// function mousePressed() {
+//   if (!shockMonkey.isPlaying()) {
+//     shockMonkey.loop();
+//   }
+// }
 
 function setup() {
   createCanvas(500, 500);
@@ -235,6 +241,9 @@ function draw() {
   function mousePressed() {
     if (state === "title") {
       state = 'simulation';
+    }
+    if (!shockMonkey.isPlaying()) {
+      shockMonkey.loop();
     }
   }
 
