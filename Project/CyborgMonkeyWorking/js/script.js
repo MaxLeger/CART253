@@ -73,7 +73,7 @@ function preload() {
 // ** The sound functions are playing irregularly **
 
   // winSFX = loadSound("assets/sounds/win.wav");
-  // chargeSFX = loadSound("assets/sounds/Charge.m4a");
+  chargeSFX = loadSound("assets/sounds/Charge.m4a");
   // shockMonkey = loadSound("assets/sounds/ShockTheMonkey.mp3");
 
 }
@@ -203,6 +203,7 @@ function checkOverlap1() {
   let d = dist(circle1.x, circle1.y, mouseX, mouseY);
   if (circle1.collected === false && d < circle1.size / 2 + cyborgMonkeyImage.width / 2) {
      circle1.collected = true;
+     chargeSFX.play();
   }
 }
 
@@ -210,6 +211,7 @@ function checkOverlap2() {
   let d = dist(circle2.x, circle2.y, mouseX, mouseY);
   if (circle2.collected === false && d < circle2.size / 2 + cyborgMonkeyImage.width / 2) {
      circle2.collected = true;
+     chargeSFX.play();
   }
 }
 
@@ -217,6 +219,7 @@ function checkOverlap3() {
   let d = dist(circle3.x, circle3.y, mouseX, mouseY);
   if (circle3.collected === false && d < circle3.size / 2 + cyborgMonkeyImage.width / 2) {
      circle3.collected = true;
+     chargeSFX.play();
   }
 }
 
@@ -224,6 +227,7 @@ function checkOverlap4() {
   let d = dist(circle4.x, circle4.y, mouseX, mouseY);
   if (circle4.collected === false && d < circle4.size / 2 + cyborgMonkeyImage.width / 2) {
      circle4.collected = true;
+     chargeSFX.play();
   }
 }
 
