@@ -182,6 +182,8 @@ function drawShape() {
   // Draw that shape!
   ellipse(shape1.x, shape1.y, shape1.size);
   pop();
+
+	
 }
 
 function mouseIsInsideShape() {
