@@ -11,6 +11,8 @@ let orangebubbleImage
 let testtubeImage
 let introImage
 
+let waterImage
+
 let topEyeImage = {
   x: -250,
   y: -1100,
@@ -29,9 +31,10 @@ let botEyeImage = {
 
 let shape1 = undefined;
 let shape2 = undefined;
+let shape3 = undefined;
 
 
-let state = `title`;
+let state = `test`;
 
 function preload() {
   introImage = loadImage("assets/images/INTRO.png");
@@ -39,6 +42,7 @@ function preload() {
   testtubeImage = loadImage("assets/images/testTube.png");
   topEyeImage.image = loadImage("assets/images/topeye.png");
   botEyeImage.image = loadImage("assets/images/bottomeye.png");
+  waterImage = loadImage("assets/images/water.png");
 }
 
 function setup() {
@@ -49,6 +53,7 @@ function setup() {
 
   shape1 = new Element(width / 4, height / 2, color(255,0,0));
   shape2 = new Element(width / 4, height / 4, color(0,250,0));
+  shape3 = new Element(width / 4, 3 * height / 4, color(0,0,250));
 
   for (let i = 0; i < 72; i++) {
     let y = 5 + 4 * i;
@@ -78,12 +83,25 @@ function statemachine() {
       shape2.handleDragging();
       shape2.display();
     }
+
+    if (shape3.active) {
+      shape3.handleDragging();
+      shape3.display();
+    }
     // Draws the centreline
     drawBoundary();
 
     if (shape1.x > width / 2 && shape2.x > width / 2 && !shape1.isBeingDragged && !shape2.isBeingDragged) {
       shape1.active = false;
       shape2.active = false;
+    }
+    if (shape1.x > width / 2 && shape3.x > width / 2 && !shape1.isBeingDragged && !shape3.isBeingDragged) {
+      shape1.active = false;
+      shape3.active = false;
+    }
+    if (shape2.x > width / 2 && shape3.x > width / 2 && !shape2.isBeingDragged && !shape3.isBeingDragged) {
+      shape2.active = false;
+      shape3.active = false;
     }
   }
 }
@@ -99,6 +117,7 @@ function mousePressed() {
   if (state === "test") {
     shape1.mousePressed();
     shape2.mousePressed();
+    shape3.mousePressed();
   }
 }
 
@@ -142,6 +161,7 @@ function mouseReleased() {
   if (state === "test") {
     shape1.mouseReleased();
     shape2.mouseReleased();
+    shape3.mouseReleased();
   }
 }
 
