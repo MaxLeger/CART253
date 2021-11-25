@@ -13,6 +13,8 @@ let introImage
 
 let waterImage
 
+let instantSfx
+
 let topEyeImage = {
   x: -250,
   y: -1100,
@@ -34,7 +36,7 @@ let shape2 = undefined;
 let shape3 = undefined;
 
 
-let state = `test`;
+let state = `title`;
 
 function preload() {
   introImage = loadImage("assets/images/INTRO.png");
@@ -43,6 +45,7 @@ function preload() {
   topEyeImage.image = loadImage("assets/images/topeye.png");
   botEyeImage.image = loadImage("assets/images/bottomeye.png");
   waterImage = loadImage("assets/images/water.png");
+  instantSfx = loadSound("assets/sounds/Instant.mp3");
 }
 
 function setup() {
@@ -92,16 +95,30 @@ function statemachine() {
     drawBoundary();
 
     if (shape1.x > width / 2 && shape2.x > width / 2 && !shape1.isBeingDragged && !shape2.isBeingDragged) {
+      instantSfx.play();
+
       shape1.active = false;
       shape2.active = false;
+      shape1 = new Element(width / 4, height / 2, color(255,0,0));
+      shape2 = new Element(width / 4, height / 4, color(0,255,0));
     }
     if (shape1.x > width / 2 && shape3.x > width / 2 && !shape1.isBeingDragged && !shape3.isBeingDragged) {
+      instantSfx.play();
+
       shape1.active = false;
       shape3.active = false;
+      shape1 = new Element(width / 4, height / 2, color(255,0,0));
+      shape3 = new Element(width / 4, 3 * height / 4, color(0,0,250));
     }
     if (shape2.x > width / 2 && shape3.x > width / 2 && !shape2.isBeingDragged && !shape3.isBeingDragged) {
+      instantSfx.play();
+
       shape2.active = false;
       shape3.active = false;
+      shape2 = new Element(width / 4, height / 4, color(0,255,0));
+      shape3 = new Element(width / 4, 3 * height / 4, color(0,0,250));
+
+
     }
   }
 }
