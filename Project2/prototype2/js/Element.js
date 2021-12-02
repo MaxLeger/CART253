@@ -3,7 +3,7 @@ class Element {
   constructor(x, y, color) {
     this.x = x;
     this.y = y;
-    this.size = 90;
+    this.size = 45;
     this.color = color;
     this.isBeingDragged = false;
     this.offsetX = 0;
