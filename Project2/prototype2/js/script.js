@@ -67,7 +67,10 @@ function setup() {
 
   kerosene = new Element(3 * width / 12, height / 12, color(255,0,0));
   friedEgg = new Element(3 * width / 12, 3 * height / 12, color(255,0,0));
-  boillingWater = new Element(3 * width / 12, 5 * height / 12, color(90,90,230));
+
+  //MADELINE ALTERED CODE//
+  boillingWater = null;// new Element(3 * width / 12, 5 * height / 12, color(90,90,230));
+  //
 
 
 
@@ -133,11 +136,12 @@ function statemachine() {
       friedEgg.display();
     }
 
-    if (boillingWater.active) {
+    //MADELINE ALTERED CODE//
+    if (boillingWater != null && boillingWater.active) {
       boillingWater.handleDragging();
       boillingWater.display();
     }
-
+    //
 
     // Draws the centreline
     drawBoundary();
@@ -191,7 +195,12 @@ function mousePressed() {
     soil.mousePressed();
     kerosene.mousePressed();
     friedEgg.mousePressed();
-    boillingWater.mousePressed();
+
+    //MADELINE ADDED CODE//
+    if(boillingWater != null){
+      boillingWater.mousePressed();
+    }
+    //
 
   }
 }
@@ -242,7 +251,13 @@ function mouseReleased() {
     soil.mouseReleased();
     kerosene.mouseReleased();
     friedEgg.mouseReleased();
-    boillingWater.mouseReleased();
+
+    //MADELINE ALTERED CODE//
+    if(boillingWater != null){
+      boillingWater.mouseReleased();
+    }
+
+    //
   }
 }
 
