@@ -1,6 +1,6 @@
 class Element {
 
-  constructor(x, y, color) {
+  constructor(x, y, color) { //, image
     this.x = x;
     this.y = y;
     this.size = 63;
