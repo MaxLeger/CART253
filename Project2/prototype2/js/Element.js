@@ -3,8 +3,9 @@ class Element {
   constructor(x, y, color) {
     this.x = x;
     this.y = y;
-    this.size = 45;
+    this.size = 63;
     this.color = color;
+    // this.image = image;
     this.isBeingDragged = false;
     this.offsetX = 0;
     this.offsetY = 0;
@@ -28,12 +29,17 @@ class Element {
 
   display() {
     push();
+
+    // image(this.image, this.x, this.y, this.size)
+
     // Red!
     fill(this.color);
     noStroke();
     // Draw that shape!
     ellipse(this.x, this.y, this.size);
+
     pop();
+
   }
 
   mouseIsOver() {
