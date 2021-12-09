@@ -6,10 +6,16 @@ class Poison {
     this.brightness = 0;
   }
 
+  changeColor(bright) {
+    this.brightness = bright;
+  }
+
   clicked(px, py) {
     let d = dist(px, py, this.x, this.y);
     if (d < this.r) {
-      this.brightness = 255;
+      return true;
+    } else {
+      return false;
     }
   }
 

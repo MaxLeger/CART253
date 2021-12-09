@@ -19,6 +19,8 @@ let boilingwaterImage
 
 let brainBackImage
 
+let conclusionImage
+
 let instantSfx
 
 // Closing eyelids properties
@@ -47,7 +49,8 @@ let water = undefined;
 // let image = undefined
 
 
-let state = `test`;
+
+let state = `cure`;
 
 function preload() {
   introImage = loadImage("assets/images/INTRO.png");
@@ -56,20 +59,22 @@ function preload() {
   topEyeImage.image = loadImage("assets/images/topeye.png");
   botEyeImage.image = loadImage("assets/images/bottomeye.png");
 
-  // flameImage = loadImage("assets/images/flmae.png");
-  // waterImage = loadImage("assets/images/water.png");
-  // raspberrySeedImage = loadImage("assets/images/raspberrySeed.png");
-  // cabbageSeedImage = loadImage("assets/images/cabbageSeed.png");
-  // soilImage = loadImage("assets/images/soil.png");
-  //
-  // boilingwaterImage = loadImage("assets/images/boilingwater.png");
-  // raspberryImage = loadImage("assets/images/raspberry.png");
-  // cabbageImage = loadImage("assets/images/cabbage.png");
-  // blueDyeImage = loadImage("assets/images/blueDye.png");
-  // blueRasberryImage = loadImage("assets/images/blueRaspberry.png");
+  flameImage = loadImage("assets/images/flame.png");
+  waterImage = loadImage("assets/images/water.png");
+  raspberrySeedImage = loadImage("assets/images/raspberrySeed.png");
+  cabbageSeedImage = loadImage("assets/images/cabbageSeed.png");
+  soilImage = loadImage("assets/images/soil.png");
+
+  boilingwaterImage = loadImage("assets/images/boilingwater.png");
+  raspberryImage = loadImage("assets/images/raspberry.png");
+  cabbageImage = loadImage("assets/images/cabbage.png");
+  blueDyeImage = loadImage("assets/images/blueDye.png");
+  blueRasberryImage = loadImage("assets/images/blueRaspberry.png");
 
 
   brainBackImage = loadImage("assets/images/brainBack.png");
+
+  conclusionImage = loadImage("assets/images/conclusion.jpg");
 
 
   instantSfx = loadSound("assets/sounds/Instant.mp3");
@@ -83,11 +88,11 @@ function setup() {
 
   //Element Collumn 1
 
-  flame = new Element(width / 8, height / 11, color(255, 0, 0)); //, flameImage
-  water = new Element(width / 8, 3 * height / 11, color(0, 0, 250)); //waterImage
-  raspberrySeed = new Element(width / 8, 5 * height / 11, color(255, 0, 0)); //, raspberrySeedImage
-  cabbageSeed = new Element(width / 8, 7 * height / 11, color(255, 0, 0)); //, cabbageSeedImage
-  soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0)); //, soilImage
+  flame = new Element(width / 8, height / 11, color(255, 0, 0), flameImage); //, flameImage
+  water = new Element(width / 8, 3 * height / 11, color(0, 0, 250), waterImage); //, waterImage
+  raspberrySeed = new Element(width / 8, 5 * height / 11, color(255, 0, 0), raspberrySeedImage); //, raspberrySeedImage
+  cabbageSeed = new Element(width / 8, 7 * height / 11, color(255, 0, 0), cabbageSeedImage); //, cabbageSeedImage
+  soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0), soilImage); //, soilImage
 
   //Element Collumn 2
 
@@ -102,14 +107,17 @@ function setup() {
     let y = 5 + 4 * i;
     bubbles[i] = new Bubble(342, y, 27);
   }
-  for (let i = 0; i < 10; i++) {
-      let x = random(200, 400);
-      let y = random(200, 400);
-      let r = random(20, 60);
-      let b = new Poison(x, y, r);
-      poison.push(b);
+  for (let i = 0; i < 18; i++) {
+    let x = random(200, 400);
+    let y = random(200, 400);
+    let r = random(20, 60);
+    let b = new Poison(x, y, r);
+    poison.push(b);
+    if (i < 0) {
+      state = 'conclusion';
     }
   }
+}
 
 
 //Intro titlecard:
@@ -289,6 +297,9 @@ function statemachine() {
     //
   } else if (state === `cure`) {
     cure();
+    // cured();
+  } else if (state === `conclusion`) {
+    conclusion();
   }
 }
 
@@ -296,6 +307,14 @@ function cure() {
   image(brainBackImage, 0, 0);
 
   for (let i = 0; i < poison.length; i++) {
+    if (poison[i].clicked(mouseX, mouseY)) {
+      poison[i].changeColor(255);
+    } else {
+      poison[i].changeColor(0);
+    }
+    if (i < 0) {
+      state = 'conclusion';
+    }
     poison[i].move();
     poison[i].show();
   }
@@ -335,12 +354,24 @@ function mousePressed() {
     }
 
   }
+
   if (state === "cure") {
-    for (let i = 0; i < poison.length; i++) {
-    poison[i].clicked(mouseX, mouseY);
+    for (let i = poison.length - 1; i >= 0; i--) {
+      if (poison[i].clicked(mouseX, mouseY)) {
+        poison.splice(i, 1);
+      }
+      if (poison.length <= 0) {
+        state = 'conclusion';
+      }
+    }
   }
 }
-}
+
+// function cured() {
+//   if (poison[i] < 0) {
+//     state = 'conclusion';
+//   }
+// }
 
 function drawBoundary() {
   push();
@@ -379,4 +410,14 @@ function mouseReleased() {
       blueDye.mouseReleased();
     }
   }
+}
+
+// function cured() {
+//   if (poison.active = false) {
+//     state = 'conclusion';
+//   }
+// }
+
+function conclusion() {
+  image(conclusionImage, 0, 0)
 }
