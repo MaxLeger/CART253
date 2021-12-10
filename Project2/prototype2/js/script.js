@@ -17,6 +17,9 @@ let waterImage
 
 let boilingwaterImage
 
+let letterImage
+let messageImage
+
 let brainBackImage
 
 let conclusionImage
@@ -46,11 +49,11 @@ let botEyeImage = {
 let flame = undefined;
 let water = undefined;
 
-// let image = undefined
+
+let on = false;
 
 
-
-let state = `cure`;
+let state = `test`;
 
 function preload() {
   introImage = loadImage("assets/images/INTRO.png");
@@ -71,6 +74,8 @@ function preload() {
   blueDyeImage = loadImage("assets/images/blueDye.png");
   blueRasberryImage = loadImage("assets/images/blueRaspberry.png");
 
+  letterImage = loadImage("assets/images/letter.png");
+  messageImage = loadImage("assets/images/message.png");
 
   brainBackImage = loadImage("assets/images/brainBack.png");
 
@@ -107,7 +112,7 @@ function setup() {
     let y = 5 + 4 * i;
     bubbles[i] = new Bubble(342, y, 27);
   }
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 9; i++) {
     let x = random(200, 400);
     let y = random(200, 400);
     let r = random(20, 60);
@@ -228,10 +233,12 @@ function statemachine() {
       blueDye.handleDragging();
       blueDye.display();
     }
-    //
 
     // Draws the centreline
     drawBoundary();
+
+    // Draws letter
+    drawletter();
 
     //Combination system:
 
@@ -240,10 +247,10 @@ function statemachine() {
 
       flame.active = false;
       water.active = false;
-      flame = new Element(width / 8, height / 11, color(255, 0, 0));
-      water = new Element(width / 8, 3 * height / 11, color(0, 0, 250));
+      flame = new Element(width / 8, height / 11, color(255, 0, 0), flameImage);
+      water = new Element(width / 8, 3 * height / 11, color(0, 0, 250), waterImage);
       //Makes:
-      boillingWater = new Element(3 * width / 8, height / 11, color(90, 90, 230));
+      boillingWater = new Element(3 * width / 8, height / 11, color(90, 90, 230), boilingwaterImage);
     }
 
     if (soil.x > width / 2 && raspberrySeed.x > width / 2 && !soil.isBeingDragged && !raspberrySeed.isBeingDragged) {
@@ -251,10 +258,10 @@ function statemachine() {
 
       soil.active = false;
       raspberrySeed.active = false;
-      soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0));
-      raspberrySeed = new Element(width / 8, 5 * height / 11, color(255, 0, 0));
+      soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0), soilImage);
+      raspberrySeed = new Element(width / 8, 5 * height / 11, color(255, 0, 0), raspberrySeedImage);
       //Makes:
-      raspberry = new Element(3 * width / 8, 3 * height / 11, color(90, 90, 230));
+      raspberry = new Element(3 * width / 8, 3 * height / 11, color(90, 90, 230), raspberryImage);
 
 
     }
@@ -263,21 +270,23 @@ function statemachine() {
 
       soil.active = false;
       cabbageSeed.active = false;
-      soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0));
-      cabbageSeed = new Element(width / 8, 7 * height / 11, color(255, 0, 0));
+      soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0), soilImage);
+      cabbageSeed = new Element(width / 8, 7 * height / 11, color(255, 0, 0), cabbageSeedImage);
       //Makes:
-      cabbage = new Element(3 * width / 8, 5 * height / 11, color(255, 0, 0));
+      cabbage = new Element(3 * width / 8, 5 * height / 11, color(255, 0, 0), cabbageImage);
     }
+
+    //PLEASE HELP
 
     // if (boillingWater.x > width / 2 && cabbage.x > width / 2 && !boillingWater.isBeingDragged && !cabbage.isBeingDragged) {
     //   instantSfx.play();
     //
     //   boillingWater.active = false;
     //   cabbage.active = false;
-    //   boillingWater = new Element(3 * width / 8, height / 11, color(90,90,230));
-    //   cabbage = new Element(3 * width / 8, 5 * height / 11, color(255,0,0));
+    //   boillingWater = new Element(3 * width / 8, height / 11, color(90,90,230), boilingwaterImage);
+    //   cabbage = new Element(3 * width / 8, 5 * height / 11, color(255,0,0), cabbageImage);
     //   //Makes:
-    //   blueDye = new Element(3 * width / 8, 7 * height / 11, color(255,0,0));
+    //   blueDye = new Element(3 * width / 8, 7 * height / 11, color(255,0,0), blueDyeImage);
     // }
     //
     // if (blueDye.x > width / 2 && raspberry.x > width / 2 && !blueDye.isBeingDragged && !raspberry.isBeingDragged) {
@@ -285,18 +294,19 @@ function statemachine() {
     //
     //   blueDye.active = false;
     //   raspberry.active = false;
-    //   blueDye = new Element(3 * width / 8, 7 * height / 11, color(255,0,0));
-    //   raspberry = new Element(3 * width / 8, 3 * height / 11, color(90,90,230));
+    //   blueDye = new Element(3 * width / 8, 7 * height / 11, color(255,0,0), blueDyeImage);
+    //   raspberry = new Element(3 * width / 8, 3 * height / 11, color(90,90,230), raspberryImage);
     //   //Makes:
-    //   blueRaspberry = new Element(3 * width / 8, 9 * height / 11, color(90,90,230));
+    //   blueRaspberry = new Element(3 * width / 8, 9 * height / 11, color(90,90,230), blueRasberryImage);
     // }
-
+    //
     // if (blueRaspberry.x > width / 2 && !blueDye.isBeingDragged) {
     //   state = 'cure';
     // }
-    //
+
   } else if (state === `cure`) {
     cure();
+
     // cured();
   } else if (state === `conclusion`) {
     conclusion();
@@ -367,17 +377,45 @@ function mousePressed() {
   }
 }
 
-// function cured() {
-//   if (poison[i] < 0) {
-//     state = 'conclusion';
-//   }
-// }
 
 function drawBoundary() {
   push();
   stroke(255);
   line(width / 2, 0, width / 2, height);
   pop();
+}
+
+function drawletter() {
+  let square = {
+    x: random(width / 2 - 1, width / 2 + 1),
+    y: random(height / 2 - 1, height / 2 + 1),
+    // x: width / 2,
+    // y: height / 22,
+    w: width / 6,
+    h: height / 6,
+  }
+
+
+  //draw a rectangle
+  noStroke();
+  fill(255, 255, 255);
+  imageMode(CENTER);
+  image(letterImage, square.x, square.y, square.w, square.h);
+
+  //let the rectangle pop when mouse is inside of it
+  if (mouseX > width / 3 && mouseX < width / 2 && mouseY > height / 3 && mouseY < height / 2) {
+    square.x = width / 3;
+    square.y = height / 3;square.w = square.w * 2
+    square.h = square.h * 2
+  }
+
+  //define "on"
+  if (on) {
+    noStroke();
+    fill(204, 153, 255);
+    imageMode(CENTER);
+    image(messageImage, width / 2, height / 2, width / 2, height / 2);
+  }
 }
 
 function mouseReleased() {
@@ -409,14 +447,13 @@ function mouseReleased() {
     if (blueDye != null) {
       blueDye.mouseReleased();
     }
+    // letter activation
+    if (mouseX > width / 3 && mouseX < width / 3 * 2 && mouseY > height / 3 && mouseY < height / 3 * 2) {
+    on = !on
+  }
   }
 }
 
-// function cured() {
-//   if (poison.active = false) {
-//     state = 'conclusion';
-//   }
-// }
 
 function conclusion() {
   image(conclusionImage, 0, 0)

@@ -3,7 +3,7 @@ class Element {
   constructor(x, y, color, image) { //, image
     this.x = x;
     this.y = y;
-    this.size = 63;
+    this.size = 72;
     this.color = color;
     this.image = image;
     this.isBeingDragged = false;
@@ -30,6 +30,7 @@ class Element {
   display() {
     push();
 
+    imageMode(CENTER);
     image(this.image, this.x, this.y, this.size)
 
     // // Red!
