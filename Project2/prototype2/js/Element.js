@@ -1,6 +1,14 @@
+/***********************************************
+The Element Object Oriented Class
+
+the Element class is an object oriented form of the P5 code on dragging and dropping.
+
+By MGL
+************************************************/
+
 class Element {
 
-  constructor(x, y, color, image) { //, image
+  constructor(x, y, color, image) {
     this.x = x;
     this.y = y;
     this.size = 72;
@@ -28,16 +36,11 @@ class Element {
   }
 
   display() {
+    //Displays the elements as their repective images
     push();
 
     imageMode(CENTER);
     image(this.image, this.x, this.y, this.size)
-
-    // // Red!
-    // fill(this.color);
-    // noStroke();
-    // // Draw that shape!
-    // ellipse(this.x, this.y, this.size);
 
     pop();
 

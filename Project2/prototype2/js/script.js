@@ -1,9 +1,12 @@
 /***********************************************
-Template p5 project #2
-MGL
+p5 project #2: ESCAPE LAB
 
-This is a description of this template project.
+By MGL
+
+MAIN JS CODE:
 ************************************************/
+
+//List of all the (Let X):
 
 let bubbles = [];
 
@@ -13,6 +16,8 @@ let orangebubbleImage
 let testtubeImage
 let introImage
 
+let frogInfoImage
+
 let waterImage
 
 let boilingwaterImage
@@ -20,10 +25,14 @@ let boilingwaterImage
 let letterImage
 let messageImage
 
+let testBackgroundImage
+
 let brainBackImage
 
 let conclusionImage
+let frogGif
 
+let scaryMusic
 let instantSfx
 
 // Closing eyelids properties
@@ -44,16 +53,17 @@ let botEyeImage = {
   image: undefined
 }
 
-
-
 let flame = undefined;
 let water = undefined;
-
+let boilingwater = undefined;
+let cabbage = undefined;
+let blueDye = undefined;
+let blueRaspberry = undefined;
 
 let on = false;
 
+let state = `title`;
 
-let state = `test`;
 
 function preload() {
   introImage = loadImage("assets/images/INTRO.png");
@@ -61,6 +71,8 @@ function preload() {
   testtubeImage = loadImage("assets/images/testTube.png");
   topEyeImage.image = loadImage("assets/images/topeye.png");
   botEyeImage.image = loadImage("assets/images/bottomeye.png");
+
+  frogInfoImage = loadImage("assets/images/frogInfo.png");
 
   flameImage = loadImage("assets/images/flame.png");
   waterImage = loadImage("assets/images/water.png");
@@ -72,16 +84,19 @@ function preload() {
   raspberryImage = loadImage("assets/images/raspberry.png");
   cabbageImage = loadImage("assets/images/cabbage.png");
   blueDyeImage = loadImage("assets/images/blueDye.png");
-  blueRasberryImage = loadImage("assets/images/blueRaspberry.png");
+  blueRaspberryImage = loadImage("assets/images/blueRaspberry.png");
 
   letterImage = loadImage("assets/images/letter.png");
   messageImage = loadImage("assets/images/message.png");
 
+  testBackgroundImage = loadImage("assets/images/testbackground.jpg");
+
   brainBackImage = loadImage("assets/images/brainBack.png");
 
   conclusionImage = loadImage("assets/images/conclusion.jpg");
+  frogGif = loadImage("assets/images/pepe-clap.gif");
 
-
+  scaryMusic = loadSound("assets/sounds/scary.mp3");
   instantSfx = loadSound("assets/sounds/Instant.mp3");
 }
 
@@ -93,25 +108,29 @@ function setup() {
 
   //Element Collumn 1
 
-  flame = new Element(width / 8, height / 11, color(255, 0, 0), flameImage); //, flameImage
-  water = new Element(width / 8, 3 * height / 11, color(0, 0, 250), waterImage); //, waterImage
-  raspberrySeed = new Element(width / 8, 5 * height / 11, color(255, 0, 0), raspberrySeedImage); //, raspberrySeedImage
-  cabbageSeed = new Element(width / 8, 7 * height / 11, color(255, 0, 0), cabbageSeedImage); //, cabbageSeedImage
-  soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0), soilImage); //, soilImage
+  flame = new Element(width / 9, height / 10, color(255, 0, 0), flameImage); //, flameImage
+  water = new Element(width / 9, 3 * height / 10, color(0, 0, 250), waterImage); //, waterImage
+  raspberrySeed = new Element(width / 9, 5 * height / 10, color(255, 0, 0), raspberrySeedImage); //, raspberrySeedImage
+  cabbageSeed = new Element(width / 9, 7 * height / 10, color(255, 0, 0), cabbageSeedImage); //, cabbageSeedImage
+  soil = new Element(width / 9, 9 * height / 10, color(255, 0, 0), soilImage); //, soilImage
+
 
   //Element Collumn 2
 
-  //MADELINE ALTERED CODE//
-  boillingWater = null; // new Element(3 * width / 12, 5 * height / 12, color(90,90,230));
+  //Null allows an entity to exists without being Neither true or False
+  boillingWater = null;
   raspberry = null;
   cabbage = null;
   blueDye = null;
   blueRaspberry = null;
 
+  //Bubbles setup:
   for (let i = 0; i < 72; i++) {
     let y = 5 + 4 * i;
     bubbles[i] = new Bubble(342, y, 27);
   }
+
+  //Poison setup:
   for (let i = 0; i < 9; i++) {
     let x = random(200, 400);
     let y = random(200, 400);
@@ -145,8 +164,6 @@ function transition() {
 
   botEyeImage.y = botEyeImage.y + botEyeImage.vy
 
-  // console.log(topEyeImage.y)
-  // console.log(botEyeImage.y)
 
   image(topEyeImage.image, topEyeImage.x, topEyeImage.y)
 
@@ -156,15 +173,14 @@ function transition() {
 
 function sleep() {
   if (topEyeImage.y > -270) {
-    state = 'test';
+    state = 'frogfrog';
   }
 }
 
-
-function lab() {
-
+//Displays the little frog helper's message
+function DisplayMessageFrog() {
+  image(frogInfoImage, 0, 0);
 }
-
 
 function draw() {
   background(0);
@@ -178,11 +194,16 @@ function statemachine() {
   } else if (state === `transition`) {
     transition();
     sleep();
-  } else if (state === 'wake') {
-    lab();
+  } else if (state === 'frogfrog') {
+    DisplayMessageFrog();
 
-    // The Test State: Crafting System
+    // The Test State repreents the Crafting System
   } else if (state === 'test') {
+
+    testBackground();
+
+    //Displaying the elements
+
     if (flame.active) {
       flame.handleDragging();
       flame.display();
@@ -208,7 +229,8 @@ function statemachine() {
       soil.display();
     }
 
-    //MADELINE ALTERED CODE//
+    //Displaying the elements which are not present on screen at beggining of the the new state.
+
     if (boillingWater != null && boillingWater.active) {
       boillingWater.handleDragging();
       boillingWater.display();
@@ -237,9 +259,6 @@ function statemachine() {
     // Draws the centreline
     drawBoundary();
 
-    // Draws letter
-    drawletter();
-
     //Combination system:
 
     if (flame.x > width / 2 && water.x > width / 2 && !flame.isBeingDragged && !water.isBeingDragged) {
@@ -247,10 +266,11 @@ function statemachine() {
 
       flame.active = false;
       water.active = false;
-      flame = new Element(width / 8, height / 11, color(255, 0, 0), flameImage);
-      water = new Element(width / 8, 3 * height / 11, color(0, 0, 250), waterImage);
+      //Respawns:
+      flame = new Element(width / 10, height / 10, color(255, 0, 0), flameImage);
+      water = new Element(width / 10, 3 * height / 10, color(0, 0, 250), waterImage);
       //Makes:
-      boillingWater = new Element(3 * width / 8, height / 11, color(90, 90, 230), boilingwaterImage);
+      boillingWater = new Element(3 * width / 9, height / 10, color(90, 90, 230), boilingwaterImage);
     }
 
     if (soil.x > width / 2 && raspberrySeed.x > width / 2 && !soil.isBeingDragged && !raspberrySeed.isBeingDragged) {
@@ -258,10 +278,11 @@ function statemachine() {
 
       soil.active = false;
       raspberrySeed.active = false;
-      soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0), soilImage);
-      raspberrySeed = new Element(width / 8, 5 * height / 11, color(255, 0, 0), raspberrySeedImage);
+      //Respawns:
+      soil = new Element(width / 10, 9 * height / 10, color(255, 0, 0), soilImage);
+      raspberrySeed = new Element(width / 10, 5 * height / 10, color(255, 0, 0), raspberrySeedImage);
       //Makes:
-      raspberry = new Element(3 * width / 8, 3 * height / 11, color(90, 90, 230), raspberryImage);
+      raspberry = new Element(3 * width / 9, 3 * height / 10, color(90, 90, 230), raspberryImage);
 
 
     }
@@ -270,52 +291,55 @@ function statemachine() {
 
       soil.active = false;
       cabbageSeed.active = false;
-      soil = new Element(width / 8, 9 * height / 11, color(255, 0, 0), soilImage);
-      cabbageSeed = new Element(width / 8, 7 * height / 11, color(255, 0, 0), cabbageSeedImage);
+      //Respawns:
+      soil = new Element(width / 10, 9 * height / 10, color(255, 0, 0), soilImage);
+      cabbageSeed = new Element(width / 10, 7 * height / 10, color(255, 0, 0), cabbageSeedImage);
       //Makes:
-      cabbage = new Element(3 * width / 8, 5 * height / 11, color(255, 0, 0), cabbageImage);
+      cabbage = new Element(3 * width / 9, 5 * height / 10, color(255, 0, 0), cabbageImage);
     }
 
-    //PLEASE HELP
+    if (cabbage && boillingWater && boillingWater.x > width / 2 && cabbage.x > width / 2 && !boillingWater.isBeingDragged && !cabbage.isBeingDragged) {
+      instantSfx.play();
 
-    // if (boillingWater.x > width / 2 && cabbage.x > width / 2 && !boillingWater.isBeingDragged && !cabbage.isBeingDragged) {
-    //   instantSfx.play();
-    //
-    //   boillingWater.active = false;
-    //   cabbage.active = false;
-    //   boillingWater = new Element(3 * width / 8, height / 11, color(90,90,230), boilingwaterImage);
-    //   cabbage = new Element(3 * width / 8, 5 * height / 11, color(255,0,0), cabbageImage);
-    //   //Makes:
-    //   blueDye = new Element(3 * width / 8, 7 * height / 11, color(255,0,0), blueDyeImage);
-    // }
-    //
-    // if (blueDye.x > width / 2 && raspberry.x > width / 2 && !blueDye.isBeingDragged && !raspberry.isBeingDragged) {
-    //   instantSfx.play();
-    //
-    //   blueDye.active = false;
-    //   raspberry.active = false;
-    //   blueDye = new Element(3 * width / 8, 7 * height / 11, color(255,0,0), blueDyeImage);
-    //   raspberry = new Element(3 * width / 8, 3 * height / 11, color(90,90,230), raspberryImage);
-    //   //Makes:
-    //   blueRaspberry = new Element(3 * width / 8, 9 * height / 11, color(90,90,230), blueRasberryImage);
-    // }
-    //
-    // if (blueRaspberry.x > width / 2 && !blueDye.isBeingDragged) {
-    //   state = 'cure';
-    // }
+      boillingWater.active = false;
+      cabbage.active = false;
+      //Respawns:
+      boillingWater = new Element(3 * width / 9, height / 10, color(90, 90, 230), boilingwaterImage);
+      cabbage = new Element(3 * width / 9, 5 * height / 10, color(255, 0, 0), cabbageImage);
+      //Makes:
+      blueDye = new Element(3 * width / 9, 7 * height / 10, color(255, 0, 0), blueDyeImage);
+    }
+
+    if (blueDye && raspberry && blueDye.x > width / 2 && raspberry.x > width / 2 && !blueDye.isBeingDragged && !raspberry.isBeingDragged) {
+      instantSfx.play();
+
+      blueDye.active = false;
+      raspberry.active = false;
+      //Respawns:
+      blueDye = new Element(3 * width / 9, 7 * height / 10, color(255, 0, 0), blueDyeImage);
+      raspberry = new Element(3 * width / 9, 3 * height / 10, color(90, 90, 230), raspberryImage);
+      //Makes:
+      blueRaspberry = new Element(3 * width / 9, 9 * height / 10, color(90, 90, 230), blueRaspberryImage); //THE ANTIDOTE!
+    }
+
+    if (blueRaspberry && blueRaspberry.x > width / 2 && !blueRaspberry.isBeingDragged) {
+      //Consumming the ANTIDOTE transitions to the next state.
+      state = 'cure';
+    }
 
   } else if (state === `cure`) {
-    cure();
+    DisplayCure();
 
-    // cured();
   } else if (state === `conclusion`) {
-    conclusion();
+    displayConclusion();
   }
 }
 
-function cure() {
-  image(brainBackImage, 0, 0);
+function DisplayCure() {
+  //Background Image:
+  image(brainBackImage, 350, 350);
 
+  //Displaying the poison bubbles
   for (let i = 0; i < poison.length; i++) {
     if (poison[i].clicked(mouseX, mouseY)) {
       poison[i].changeColor(255);
@@ -323,6 +347,7 @@ function cure() {
       poison[i].changeColor(0);
     }
     if (i < 0) {
+      //The method of transitioning once all the poison bubbles are popped
       state = 'conclusion';
     }
     poison[i].move();
@@ -331,10 +356,21 @@ function cure() {
 }
 
 function mousePressed() {
+  //Click to transition to the next state
   if (state === "title") {
     state = 'transition';
   }
+
+  if (state === "frogfrog") {
+    state = 'test';
+  }
+  //Activation of the background music
+  if (!scaryMusic.isPlaying()) {
+    scaryMusic.loop();
+  }
+
   if (state === "test") {
+    //MousePressed function for the crafting elements which are present on screen
     flame.mousePressed();
     water.mousePressed();
     raspberrySeed.mousePressed();
@@ -342,7 +378,7 @@ function mousePressed() {
     soil.mousePressed();
 
 
-    //MADELINE ADDED CODE//
+    //MousePressed function alterative for element which aren't present on screen yet
     if (boillingWater != null) {
       boillingWater.mousePressed();
     }
@@ -366,10 +402,12 @@ function mousePressed() {
   }
 
   if (state === "cure") {
+    // In the 'cure' state, only respond to the mouse click if the shape is active
     for (let i = poison.length - 1; i >= 0; i--) {
       if (poison[i].clicked(mouseX, mouseY)) {
         poison.splice(i, 1);
       }
+      //The method of transitioning once all the poison bubbles are popped
       if (poison.length <= 0) {
         state = 'conclusion';
       }
@@ -381,53 +419,26 @@ function mousePressed() {
 function drawBoundary() {
   push();
   stroke(255);
+  strokeWeight(7);
   line(width / 2, 0, width / 2, height);
   pop();
 }
 
-function drawletter() {
-  let square = {
-    x: random(width / 2 - 1, width / 2 + 1),
-    y: random(height / 2 - 1, height / 2 + 1),
-    // x: width / 2,
-    // y: height / 22,
-    w: width / 6,
-    h: height / 6,
-  }
-
-
-  //draw a rectangle
-  noStroke();
-  fill(255, 255, 255);
+function testBackground() {
   imageMode(CENTER);
-  image(letterImage, square.x, square.y, square.w, square.h);
-
-  //let the rectangle pop when mouse is inside of it
-  if (mouseX > width / 3 && mouseX < width / 2 && mouseY > height / 3 && mouseY < height / 2) {
-    square.x = width / 3;
-    square.y = height / 3;square.w = square.w * 2
-    square.h = square.h * 2
-  }
-
-  //define "on"
-  if (on) {
-    noStroke();
-    fill(204, 153, 255);
-    imageMode(CENTER);
-    image(messageImage, width / 2, height / 2, width / 2, height / 2);
-  }
+  image(testBackgroundImage, 350, 350);
 }
 
 function mouseReleased() {
   if (state === "test") {
+    //Elements present at the start of the 'test' state
     flame.mouseReleased();
     water.mouseReleased();
     raspberrySeed.mouseReleased();
     cabbageSeed.mouseReleased();
     soil.mouseReleased();
 
-
-    //MADELINE ALTERED CODE//
+    //Elements not present at the start of the 'test' state
     if (boillingWater != null) {
       boillingWater.mouseReleased();
     }
@@ -447,14 +458,13 @@ function mouseReleased() {
     if (blueDye != null) {
       blueDye.mouseReleased();
     }
-    // letter activation
-    if (mouseX > width / 3 && mouseX < width / 3 * 2 && mouseY > height / 3 && mouseY < height / 3 * 2) {
-    on = !on
-  }
   }
 }
 
 
-function conclusion() {
-  image(conclusionImage, 0, 0)
+function displayConclusion() {
+  imageMode(CENTER);
+  image(frogGif, 350, 350, 700, 700);
+
+  scaryMusic.stop();
 }
