@@ -90,7 +90,7 @@ function preload() {
   letterImage = loadImage("assets/images/letter.png");
   messageImage = loadImage("assets/images/message.png");
 
-  testBackgroundImage = loadImage("assets/images/testbackground.jpg");
+  testBackgroundImage = loadImage("assets/images/craftingBackground.png");
 
   brainBackImage = loadImage("assets/images/brainBack.png");
 
@@ -432,7 +432,7 @@ function drawBoundary() {
 
 function testBackground() {
   imageMode(CENTER);
-  image(testBackgroundImage, 350, 350);
+  image(testBackgroundImage, 350, 350, 700, 700);
 }
 
 function mouseReleased() {
