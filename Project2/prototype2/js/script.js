@@ -34,6 +34,7 @@ let frogGif
 
 let scaryMusic
 let instantSfx
+let victoryMusic
 
 // Closing eyelids properties
 
@@ -94,10 +95,11 @@ function preload() {
   brainBackImage = loadImage("assets/images/brainBack.png");
 
   conclusionImage = loadImage("assets/images/conclusion.jpg");
-  frogGif = loadImage("assets/images/pepe-clap.gif");
+  frogGif = loadImage("assets/images/thatFrog.gif");
 
   scaryMusic = loadSound("assets/sounds/scary.mp3");
   instantSfx = loadSound("assets/sounds/Instant.mp3");
+  victoryMusic = loadSound("assets/sounds/VictorySoundEffect.mp3");
 }
 
 function setup() {
@@ -327,6 +329,7 @@ function statemachine() {
       state = 'cure';
     }
 
+
   } else if (state === `cure`) {
     DisplayCure();
 
@@ -410,6 +413,8 @@ function mousePressed() {
       //The method of transitioning once all the poison bubbles are popped
       if (poison.length <= 0) {
         state = 'conclusion';
+        //Anounce the victory
+        victoryMusic.play();
       }
     }
   }
