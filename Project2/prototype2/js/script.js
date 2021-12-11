@@ -105,8 +105,9 @@ function preload() {
 function setup() {
   createCanvas(700, 700);
 
-  topEyeImage.vy = 3;
-  botEyeImage.vy = -3;
+  //Speed of the eyelids closing
+  topEyeImage.vy = 2;
+  botEyeImage.vy = -2;
 
   //Element Collumn 1
 
