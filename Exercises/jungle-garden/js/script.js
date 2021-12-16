@@ -1,85 +1,136 @@
 /***********************************************
-Dodging COVIND-19
-MGL
+JUNGLE GUARDEN
 
-This is a description of this template project.
+By MGL
 ************************************************/
+let playerScore = 0
+let paddle
+let ball
+let bricks
+let gameState
 
-let covid19 = {
-  x: 0,
-  y: 250,
-  size: 100,
-  vx: 0,
-  vy: 0,
-  speed: 5,
-  fill: {
-    r: 225,
-    g: 0,
-    b: 0
-  }
+let flakes = []
+curTime = 0;
 
-};
-
-let user = {
-  x: 250,
-  y: 250,
-  size: 100,
-  fill: 255
+function preload() {
+  frogImage = loadImage("assets/images/frogon.png");
+  eggImage = loadImage("assets/images/egg.png");
+  jungleImage = loadImage("assets/images/jungle.png");
 }
 
-
-
-/**
-Description of setup
-*/
 function setup() {
-
   createCanvas(windowWidth, windowHeight);
 
-  covid19.y = random(0, height);
-  covid19.vx = covid19.speed;
+  let colors = createColors()
+  gameState = 'playing'
+  paddle = new Paddle(frogImage)
+  ball = new Ball(eggImage)
 
-noCursor();
+  bricks = createBricks(colors)
 
+  genFlakes(200, 100);
+  genFlakes(width / 2, height / 2);
+}
+
+function createColors() {
+  const colors = []
+  colors.push(color(250, 165, 0))
+  colors.push(color(0, 206, 0))
+  colors.push(color(0, 250, 0))
+  for (let i = 0; i < 10; i++) {
+    colors.push(color(random(0, 100), random(0, 255), random(0, 255)))
   }
+  return colors
+}
+
+function createBricks(colors) {
+  const bricks = []
+  const rows = 5
+  const bricksPerRow = 9
+  const brickWidth = width / bricksPerRow
+  for (let row = 0; row < rows; row++) {
+    for (let i = 0; i < bricksPerRow; i++) {
+      brick = new Brick(createVector(brickWidth * i, 25 * row), brickWidth, 25, colors[floor(random(0, colors.length))])
+      bricks.push(brick)
+    }
+  }
+  return bricks
+}
 
 function draw() {
-  background(0);
+  if (gameState === 'playing') {
+    imageMode(CENTER);
+    image(jungleImage, 1000, 1000, 2500, 2000)
 
-  // Display static
-  for (let i = 0; i < 180; i++) {
-  let x = random(0, width);
-  let y = random(0, height);
-  stroke(255);
-  point(x, y);
-}
+    ball.bounceEdge()
+    ball.bouncePaddle()
 
-// Covid 19 mouvement
-  covid19.x = covid19.x + covid19.vx;
-  covid19.y = covid19.y + covid19.vy;
+    ball.update()
 
-  if (covid19.x > width) {
-    covid19.x = 0;
-    covid19.y = random(0, height);
+    if (keyIsDown(LEFT_ARROW)) {
+      paddle.move('left')
+    } else if (keyIsDown(RIGHT_ARROW)) {
+      paddle.move('right')
+    }
+
+    for (let i = bricks.length - 1; i >= 0; i--) {
+      const brick = bricks[i]
+      if (brick.isColliding(ball)) {
+        ball.reverse('y')
+        bricks.splice(i, 1)
+        playerScore += brick.points
+        genFlakes()
+      } else {
+        brick.display()
+      }
+    }
+
+    paddle.display()
+    ball.display()
+
+    textSize(32)
+    fill(255)
+    text(`Score:${playerScore}`, width - 150, 50)
+
+    if (ball.belowBottom()) {
+      gameState = 'Lose'
+    }
+
+    if (bricks.length === 0) {
+      gameState = 'Win'
+    }
+  } else {
+    textSize(100)
+    gameState === 'Lose' ? fill(255, 140, 0) : fill(255)
+    text(`You ${gameState}!`, width / 2 - 220, height / 2)
   }
-
-// User mouvement
-  user.x = mouseX;
-  user.y = mouseY;
-
-// Check for catching covid19
-let d = dist(user.x, user.y, covid19.x, covid19.y);
-if (d < covid19.size/2 + user.size/2) {
-  noLoop();
+  // Displays the firework
+  curTime++;
+  for(let i = 0; i < flakes.length; i++) {
+    flakes[i].pos.add(flakes[i].vel);
+    flakes[i].size--;
+    if(flakes[i].size > 0) {
+      stroke(flakes[i].color);
+      strokeWeight(flakes[i].size);
+      point(flakes[i].pos.x, flakes[i].pos.y);
+    } else {
+      flakes.splice(i, 1);
+    }
+  }
 }
 
 
-//Display Covid 19
-  fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
-  ellipse(covid19.x, covid19.y, covid19.size);
 
-//Display User
-fill(user.fill);
-ellipse(user.x, user.y, user.size);
+// Condditions of the Firework upon collision
 
+function genFlakes(x, y) {
+  let i = 100;
+  while(i--) {
+    flakes.push({
+      color: color(color('hsl(' + floor(random(349)) + ', 100%, 50%)')),
+      pos: createVector(ball.location.x, ball.location.y),
+      vel: p5.Vector.fromAngle(random(2*PI)).mult(random(10)),
+      size: random(50)
+    });
+  }
 }

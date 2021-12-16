@@ -1,3 +1,5 @@
-# Template p5 project
+# JUNGLE GUARDEN EXERCISE
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+This is a wild-jungle iteration of the brick-braker game. Check out this sick spin-off.
+
+Code inspiration: https://github.com/CodingGarden/p5-brick-breaker
