@@ -9,6 +9,7 @@ class Ball {
     this.paddle = paddle
   }
 
+// Bounces the ball on the Paddle
   bouncePaddle() {
     // We are within the width of the paddle
     if (this.location.x + this.radius >= this.paddle.location.x &&
@@ -20,6 +21,7 @@ class Ball {
         }
   }
 
+// Bounces the ball on edges
   bounceEdge() {
     if (this.location.x + this.radius >= width) { // Check right edge
       this.reverse('x')
@@ -30,19 +32,23 @@ class Ball {
     }
   }
 
+//Displays the ball as an eggImage
   display() {
     fill(this.color)
     image(this.image, this.location.x, this.location.y, this.size, this.size)
   }
 
+//Updates the location of the ball
   update() {
     this.location.add(this.velocity)
   }
 
+//Influences the ball's coordiation
   reverse(coord) {
     this.velocity[coord] *= -1
   }
 
+// Allows the ball to fall off
   belowBottom() {
     return this.location.y - this.radius > height
   }

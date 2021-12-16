@@ -12,11 +12,13 @@ class Paddle {
     }
   }
 
+//Displays the paddle as a frogImage
   display() {
     imageMode(CENTER);
     image(this.image,this.location.x + 81, this.location.y, this.width, this.height)
   }
 
+//Mechanics of mouving the paddle
   move(direction) {
     this.location.add(this.speed[direction])
 
