@@ -1,7 +1,7 @@
 class Paddle {
   constructor(image) {
-    this.width = 150
-    this.height = 81
+    this.width = 180
+    this.height = 99
     this.color = color(255)
     this.image = image
     this.location = createVector((width / 2) - (this.width / 2), height - 35)
@@ -14,7 +14,7 @@ class Paddle {
 
   display() {
     imageMode(CENTER);
-    image(this.image,this.location.x + 71, this.location.y, this.width, this.height)
+    image(this.image,this.location.x + 81, this.location.y, this.width, this.height)
   }
 
   move(direction) {
